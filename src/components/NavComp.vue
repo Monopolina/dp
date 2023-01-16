@@ -10,7 +10,7 @@
           <li><a href="/" class="nav-link px-2 text-secondary">Главная</a></li>
           <li><a href="/about" class="nav-link px-2 text-black">О нас</a></li>
           <li><a href="/nas" class="nav-link px-2 text-black">Контакты</a></li>
-          <li><a href="/MagazinView" class="nav-link px-2 text-black">Таблица</a></li>
+          <li><a href="/MagazinView" class="nav-link px-2 text-black" v-if="store.getters.isAdmin === 'admin'">Таблица</a></li>
           <li><a href="#" class="nav-link px-2 text-black">?</a></li>
         </ul>
 

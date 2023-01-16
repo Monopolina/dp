@@ -14,12 +14,22 @@ fastify.register(require('@fastify/cors'), {
   origin: true
 })
 
-fastify.get("/product", async (req, res) => {
-pool.query("SELECT * FROM product", (err, result)=>{
-if(err) res.send(err) 
-else res.send(result)
-console.log(result)
+fastify.get("/product",  (req, res) => {
+pool.query("SELECT * FROM product",  (err, result)=>{
+if(err) { res.send(err)} 
+else { res.send(result)}
 })})
+
+fastify.route({
+  method: 'GET',
+  url: '/product',
+  handler: ()=>{
+    pool.query("SELECT * FROM product",  (err, result)=>{
+      if(err) { res.send(err)} 
+      else { res.send(result)}})
+  },
+  
+})
 
 fastify.get('/', (req, reply) => {
 })

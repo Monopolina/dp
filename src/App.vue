@@ -1,5 +1,8 @@
 <template>
   <NavComp/>
+  <!-- <button v-if="store.getters.role=== 'admin'">
+    qwe
+  </button> -->
   <router-view/>
   <FooterComp/>
 </template>
@@ -20,5 +23,6 @@ import { useStore } from 'vuex';
 const store = useStore()
 onMounted(async()=>{
   store.dispatch("gettokenfromcookie")
+  store.dispatch("getrolefromJWT")
 })
 </script>

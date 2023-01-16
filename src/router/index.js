@@ -1,5 +1,12 @@
+import { VueCookieNext } from 'vue-cookie-next'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+
+const isAdmin = async ()=>{
+  const role = VueCookieNext.getCookie("role")
+  if(role && role==="admin") return true
+  else return false 
+}
 
 const routes = [
   {
@@ -53,7 +60,8 @@ const routes = [
   {
     path: '/MagazinView',
     name: 'MagazinView',
-    component: () => import('../views/magazin/MagazinView.vue')
+    component: () => import('../views/magazin/MagazinView.vue'),
+    beforeEnter: isAdmin
   },
 ]
 
