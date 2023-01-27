@@ -1,6 +1,11 @@
 <template>
   <div class="container">
 
+    <div align="center">
+      <h1>Таблица </h1>
+      <a href="/productsave" class="btn btn-success m-2">Добавить</a>
+    </div>
+
     <div class="m-2">
       <table class="table">
         <thead>

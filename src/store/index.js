@@ -7,7 +7,7 @@ export default createStore({
     role: "user"
   },
   getters: { 
-    token(){
+    token(state){
       return state.token
     },
     isAuthorized(state){
@@ -38,6 +38,8 @@ export default createStore({
         }
     },
     async getrolefromJWT(context){
+      try
+      {
       var base64Url = await VueCookieNext.getCookie("token").split('.')[1]
 
       var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
@@ -48,6 +50,13 @@ export default createStore({
       const result = await JSON.parse(jsonPayload)
       VueCookieNext.setCookie("role", result.admin)
       context.commit("rolemutation",result.admin) 
+      }
+
+      catch
+      {
+        VueCookieNext.setCookie("role", "user")
+        context.commit("rolemutation", "user")
+      }
     }
   },
   modules: {

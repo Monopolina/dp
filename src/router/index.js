@@ -61,6 +61,16 @@ const routes = [
     path: '/MagazinView',
     name: 'MagazinView',
     component: () => import('../views/magazin/MagazinView.vue'),
+  },
+  {
+    path: '/productsave',
+    name: 'productsave',
+    component: () => import('../views/magazin/ProductView.vue'),
+  },
+  {
+    path: '/AdminView',
+    name: 'AdminView',
+    component: () => import('../views/magazin/AdminView.vue'),
     beforeEnter: isAdmin
   },
 ]
