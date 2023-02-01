@@ -63,14 +63,32 @@ const routes = [
     component: () => import('../views/magazin/MagazinView.vue'),
   },
   {
-    path: '/productsave',
-    name: 'productsave',
+    path: '/ProductView',
+    name: 'ProductView',
     component: () => import('../views/magazin/ProductView.vue'),
   },
   {
     path: '/AdminView',
     name: 'AdminView',
-    component: () => import('../views/magazin/AdminView.vue'),
+    component: () => import('../views/admin/AdminView.vue'),
+    beforeEnter: isAdmin
+  },
+  {
+    path: '/CreateView',
+    name: 'CreateView',
+    component: () => import('../views/admin/CreateView.vue'),
+    beforeEnter: isAdmin
+  },
+  {
+    path: '/DetelsView',
+    name: 'DetelsView',
+    component: () => import('../views/admin/DetelsView.vue'),
+    beforeEnter: isAdmin
+  },
+  {
+    path: '/EditView',
+    name: 'EditView',
+    component: () => import('../views/admin/EditView.vue'),
     beforeEnter: isAdmin
   },
 ]

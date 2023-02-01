@@ -3,22 +3,22 @@
 
     <div align="center">
       <h1>Таблица </h1>
-      <a href="/productsave" class="btn btn-success m-2">Добавить</a>
+      <a href="/CreateView" class="btn btn-success m-2">Добавить</a>
     </div>
 
     <div class="m-2">
       <table class="table">
         <thead>
           <th>ID</th>
+          <th>Продукт</th>
+          <th>id категории</th>
           <th>Цена</th>
-          <th>Обложка</th>
-          <th>Бренд</th>
-          <th>Формат</th>
-          <th>Срок доставки</th>
-          <th>Скидка</th>
-          <th>Автор</th>
-          <th>Размер</th>
-          <th>Gjkdfdk</th>
+          <th>img</th>
+          <th>Доступно на складе</th>
+          <th>Доставка</th>
+          <th>Описание</th>
+          <th>Характеристика</th>
+          <th>id поставщика</th>
           <th></th>
 
         </thead>
@@ -35,9 +35,9 @@
             <td>{{ product.characteristic }}</td>
             <td>{{ product.id_provider }}</td>
             <td>
-              <button @click="getproductdetels(product.ID)" class="btn btn-outline-info m-1">Детали</button>
-              <button @click="getproductedit(product.ID)" class="btn btn btn-outline-warning m-1">Изменить</button>
-              <button @click="button(product.ID)" class="btn btn-danger m-1">Удлаить</button>
+              <button @click="getproductdetels(product.id)" class="btn btn-outline-info m-1">Детали</button>
+              <button @click="getproductedit(product.id)" class="btn btn btn-outline-warning m-1">Изменить</button>
+              <button @click="deleteproduct(product.id)" class="btn btn-danger m-1">Удлаить</button>
             </td>
           </tr>
         </tbody>
@@ -70,18 +70,16 @@ export default {
       });
       this.products = await result.json();
     },
-    async createproduct() {
-      fetch("http://localhost:3000/product/create", {
-        method: "POST",
+    async deleteproduct(id) {
+      let result = await fetch("http://localhost:3000/product/delete/"+ id, {
+        method: "GET",
         headers: {
           accept: "application/json",
           "content-type": "application/json",
-        },
-        body: JSON.stringify(this.productdata),
+          "Authorization": `Bearer ${store.getters.token}`,
+        }
       });
-    },
-    async deleteproduct(ID) {
-      return fetch("http://localhost:3000/product/delete/" + ID,);
+      this.products = await result.json();
     },
     async button(ID) {
       await this.deleteproduct(ID);

@@ -129,17 +129,72 @@ fastify.route({
   },
 })
 
-// fastify.route({
-//   method: 'POST',
-//   url: '/productsave/create', preHandler: AdminGuard,
-//   handler: (req, res) => {
-//     const params = [req.body.Цена, req.body.Обложка, req.body.Бренд, req.body.Срок_доставки, req.body.Скидка, req.body.Формат, req.body.Автор, req.body.Размер];
-//     pool.query("INSERT INTO panel (Цена, Обложка, Бренд, Срок_доставки, Скидка, Формат, Автор, Размер) VALUES (?,?,?,?,?,?,?,?)", params, (err, result) => {
-//       if (err) { res.send(err) }
-//       else { res.send(result) }
-//     })
-//   },
-// })
+fastify.route({
+  method: 'GET',
+  url: '/magazin',
+  handler: (req, res) => {
+    pool.query("SELECT * FROM product", (err, result) => {
+      if (err) { res.send(err) }
+      else { res.send(result) }
+    })
+  },
+})
+
+fastify.route({
+  method: 'POST',
+  url: '/product/create', preHandler: AdminGuard,
+  handler: (req, res) => {
+    pool.query("SELECT id FROM categori WHERE categoria LIKE ?", [req.body.categori_name], (err, result1) => {
+      if (err) { res.send(err) }
+      else {
+        pool.query("SELECT id FROM provider WHERE name_provider LIKE ?", [req.body.provider_name], (err, result2) => {
+          if (err) { res.send(err) }
+          else {
+            const params = [req.body.product_name, result1[0].id, req.body.price, req.body.img, req.body.available_in_stock, req.body.delivery, req.body.description, req.body.characteristic, result2[0].id];
+            pool.query("INSERT INTO product (product_name, id_categori, price, img, available_in_stock, delivery, description, characteristic, id_provider) VALUES (?,?,?,?,?,?,?,?,?)", params, (err, result) => {
+              if (err) { res.send(err) }
+              else { res.send(result) }
+            })
+          }
+        })
+      }
+    })
+  }
+})
+
+fastify.route({
+  method: 'GET',
+  url: '/product/create/selectprovider', preHandler: AdminGuard,
+  handler: (req, res) => {
+    pool.query("SELECT * FROM provider", (err, result) => {
+      if (err) { res.send(err) }
+      else { res.send(result) }
+    })
+  },
+})
+fastify.route({
+  method: 'GET',
+  url: '/product/create/selectcategori', preHandler: AdminGuard,
+  handler: (req, res) => {
+    pool.query("SELECT * FROM categori", (err, result) => {
+      if (err) { res.send(err) }
+      else { res.send(result) }
+    })
+  },
+})
+
+fastify.route({
+  method: 'GET',
+  url: '/product/delete/:id', preHandler: AdminGuard,
+  handler: (req, res) => {
+    pool.query("DELETE FROM product WHERE id=?", [req.params.id], (err, result) => {
+      if (err) { res.send(err) }
+      else { res.send(result) }
+    })
+  },
+})
+
+
 
 fastify.listen({ port: 3000, host: '0.0.0.0' }, err => {
   if (err) throw err
