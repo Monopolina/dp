@@ -80,13 +80,13 @@ const routes = [
     beforeEnter: isAdmin
   },
   {
-    path: '/DetelsView',
+    path: '/DetelsView/:id',
     name: 'DetelsView',
     component: () => import('../views/admin/DetelsView.vue'),
     beforeEnter: isAdmin
   },
   {
-    path: '/EditView',
+    path: '/EditView/:id',
     name: 'EditView',
     component: () => import('../views/admin/EditView.vue'),
     beforeEnter: isAdmin

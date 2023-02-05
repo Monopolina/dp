@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-6">
           <label class="form-label">id категории</label>
-          <select v-model="selected_categori">
+          <select class="form-select" v-model="selected_categori">
             <option v-for="categori in categoris" :key="categori">
               {{ categori.categoria }}
             </option>
@@ -40,7 +40,7 @@
         </div>
         <div class="col-md-6">
           <label class="form-label">id поставщика</label>
-          <select v-model="selected_provider">
+          <select class="form-select" v-model="selected_provider">
             <option v-for="provider in providers" :key="provider">
               {{ provider.name_provider }}
             </option>
@@ -84,7 +84,6 @@ export default {
     async createproduct() {
       this.product.provider_name = this.selected_provider
       this.product.categori_name = this.selected_categori
-     // this.product.categori_name = this.selected_categori
       await fetch("http://localhost:3000/product/create", {
         method: "POST",
         headers: {
@@ -97,7 +96,7 @@ export default {
       await this.$router.push('/AdminView')
     },
     async getprovider() {
-      let result = await fetch("http://localhost:3000/product/create/selectprovider", {
+      let result = await fetch("http://localhost:3000/product/selectprovider", {
         method: "GET",
         headers: {
           accept: "application/json",
@@ -108,7 +107,7 @@ export default {
       this.providers = await result.json();
     },
     async getcategori() {
-      let result = await fetch("http://localhost:3000/product/create/selectcategori", {
+      let result = await fetch("http://localhost:3000/product/selectcategori", {
         method: "GET",
         headers: {
           accept: "application/json",

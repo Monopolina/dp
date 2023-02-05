@@ -164,7 +164,7 @@ fastify.route({
 
 fastify.route({
   method: 'GET',
-  url: '/product/create/selectprovider', preHandler: AdminGuard,
+  url: '/product/selectprovider', preHandler: AdminGuard,
   handler: (req, res) => {
     pool.query("SELECT * FROM provider", (err, result) => {
       if (err) { res.send(err) }
@@ -174,7 +174,7 @@ fastify.route({
 })
 fastify.route({
   method: 'GET',
-  url: '/product/create/selectcategori', preHandler: AdminGuard,
+  url: '/product/selectcategori', preHandler: AdminGuard,
   handler: (req, res) => {
     pool.query("SELECT * FROM categori", (err, result) => {
       if (err) { res.send(err) }
@@ -194,7 +194,38 @@ fastify.route({
   },
 })
 
+fastify.route({
+  method: 'GET',
+  url: '/product/:id', preHandler: AdminGuard,
+  handler: (req, res) => {
+    pool.query("SELECT * FROM product WHERE id=?", [req.params.id], (err, result) => {
+      if (err) { res.send(err) }
+      else { res.send(result[0]) }
+    })
+  },
+})
 
+fastify.route({
+  method: 'POST',
+  url: '/product/edit', preHandler: AdminGuard,
+  handler: (req, res) => {
+    pool.query("SELECT id FROM categori WHERE categoria LIKE ?", [req.body.categori_name], (err, result1) => {
+      if (err) { res.send(err) }
+      else {
+        pool.query("SELECT id FROM provider WHERE name_provider LIKE ?", [req.body.provider_name], (err, result2) => {
+          if (err) { res.send(err) }
+          else {
+            const params = [req.body.product_name, result1[0].id, req.body.price, req.body.img, req.body.available_in_stock, req.body.delivery, req.body.description, req.body.characteristic, result2[0].id];
+            pool.query("UPDATE product SET (product_name, id_categori, price, img, available_in_stock, delivery, description, characteristic, id_provider) VALUES (?,?,?,?,?,?,?,?,?)", params, (err, result) => {
+              if (err) { res.send(err) }
+              else { res.send(result) }
+            })
+          }
+        })
+      }
+    })
+  }
+})
 
 fastify.listen({ port: 3000, host: '0.0.0.0' }, err => {
   if (err) throw err

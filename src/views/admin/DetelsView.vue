@@ -1,41 +1,53 @@
 <template>
-    <div class="container">
-      <div class="card border-info mb-3" align="center" style="max-width: 18rem;">
-        <div class="card-body">
-          <div class="card-header">ID {{ user.ID }}</div>
-          <p class="card-text">Цена: {{ user.Цена }}</p>
-          <p class="card-text">Обложка: {{ user.Обложка }}</p>
-          <p class="card-text">Бренд: {{ user.Бренд }}</p>
-          <p class="card-text">Срок_доставки: {{ user.Срок_доставки }}</p>
-          <p class="card-text">Скидка: {{ user.Скидка }}</p>
-          <p class="card-text">Формат: {{ user.Формат }}</p>
-          <p class="card-text">Автор: {{ user.Автор }}</p>
-          <p class="card-text">Размер: {{ user.Размер }}</p>
-          <div align="center">
-            <a href="/panel" class="btn btn-secondary m-1">Вернуться на таблицу</a>
-          </div>      
-        </div>
+  <div class="container">
+    
+    <div class="card border-info mb-3" align="center" style="max-width: 40rem;">
+      <div class="card-body">
+        <div class="card-header">id: {{ product.id }}</div>
+        <p class="card-text">Продукт: {{ product.product }}</p>
+        <p class="card-text">id категории: {{ product.id_categori }}</p>
+        <p class="card-text">Цена: {{ product.price }}</p>
+        <p class="card-text">img: {{ product.img }}</p>
+        <p class="card-text">Доступно на складе: {{ product.available_in_stock }}</p>
+        <p class="card-text">Доставка: {{ product.delivery }}</p>
+        <p class="card-text">Описание: {{ product.description }}</p>
+        <p class="card-text">Характеристика: {{ product.characteristic }}</p>
+        <p class="card-text">id поставщика: {{ product.id_provider }}</p>
+        <div align="center">
+          <a href="/AdminView" class="btn btn-secondary m-1">Вернуться на таблицу</a>
+        </div>      
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        user:{},
-      };
+  </div>
+</template>
+
+<script>
+import store from '@/store';
+export default {
+  data() {
+    return {
+      product:{},
+    };
+  },
+
+  methods: {
+    async getproductdetels() {
+      let result = await fetch("http://localhost:3000/product/"+ this.$route.params.id, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+          "Authorization": `Bearer ${store.getters.token}`,
+        }
+      });
+      this.product = await result.json();
+      // let result = await fetch("http://localhost:3000/product/"+ this.$route.params.id);
+      // this.product = await result.json();
     },
-  
-    methods: {
-      async getpaneldetels() {
-        let result = await fetch("http://localhost:3000/panel/"+ this.$route.params.id);
-        this.user = await result.json();
-      },
-    },
-   
-    mounted() {
-       this.getpaneldetels();
-    },
-  };
-  </script>
+  },
+ 
+  mounted() {
+     this.getproductdetels();
+  },
+};
+</script>
