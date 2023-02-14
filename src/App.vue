@@ -1,8 +1,5 @@
 <template>
   <NavComp/>
-  <!-- <button v-if="store.getters.role=== 'admin'">
-    qwe
-  </button> -->
   <router-view/>
   <FooterComp/>
 </template>

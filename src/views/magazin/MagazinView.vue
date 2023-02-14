@@ -1,62 +1,23 @@
 <template>
   <div class="container">
-    <a href="ProductView">
-     <div>
-      <div class="card mb-3 mx-auto" style="max-width: 800px;">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img src="https://c.dns-shop.ru/thumb/st4/fit/200/200/02e1469e2851745608a20b73be650928/6290c85e6f1dea941a3d2ffd85c145add516d8b6771224622f18eb36013dbc0e.jpg.webp" class="img-fluid rounded-start" alt="...">
+     <div v-for="product in products" :key="product"> 
+      <div class="card mb-3 mx-auto border-info" style="max-width: 740px;">
+        <div class="row g-0 catalog-product__image">
+          <div class="catalog-product__image col-md-4" @click="getproductdetels(product.id)">
+            <img :src=" require('../../assets/img/' + product.img)" class="img-fluid rounded-start" >
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">Заголовок карточки</h5>
-              <p class="card-text">Это более широкая карта с вспомогательным текстом ниже в качестве естественного
-                перехода к дополнительному контенту. Этот контент немного длиннее.</p>
-                <button type="button" class="btn btn-warning">Добавить в корзину</button>
+              <h5 class="card-title aa" @click="getproductdetels(product.id)">{{ product.product_name }}</h5>
+              <p class="card-text">Доступно на складе:{{ product.available_in_stock }} </p>
+              <p class="card-text">Доставка: {{ product.delivery }} </p>
+              <p class="card-text">{{ product.price }} руб.</p>
+              <button type="button" class="btn btn-info" @click="addcart">Добавить в корзину</button>
             </div>
           </div>
         </div>
       </div>
     </div> 
-    </a>
-    
-
-    <div class="m-2">
-      <table class="table">
-        <thead>
-          <th>ID</th>
-          <th>Продукт</th>
-          <th>id категории</th>
-          <th>Цена</th>
-          <th>img</th>
-          <th>Доступно на складе</th>
-          <th>Доставка</th>
-          <th>Описание</th>
-          <th>Характеристика</th>
-          <th>id поставщика</th>
-          <th></th>
-
-        </thead>
-        <tbody key="componentKey">
-          <tr v-for="product in products" :key="product">
-            <td>{{ product.id }}</td>
-            <td>{{ product.product }}</td>
-            <td>{{ product.id_categori }}</td>
-            <td>{{ product.price }}</td>
-            <td>{{ product.img }}</td>
-            <td>{{ product.available_in_stock }}</td>
-            <td>{{ product.delivery }}</td>
-            <td>{{ product.description }}</td>
-            <td>{{ product.characteristic }}</td>
-            <td>{{ product.id_provider }}</td>
-            <td>
-              <button @click="getproductdetels(product.ID)" class="btn btn-outline-info m-1">Детали</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
   </div>
 </template>
 
@@ -78,6 +39,12 @@ export default {
       });
       this.products = await result.json();
     },
+    async getproductdetels(id) {
+      this.$router.push({ name: 'ProductView', params: { id: id } });
+    },
+    async addcart(){
+      this.$emit('sendid', this.product.id)
+    },
   },
 
   mounted() {
@@ -85,9 +52,9 @@ export default {
   },
 };
 </script>
-
 <style>
-  a {
-  text-decoration: none;
-    }
-  </style>
+.aa:hover {
+    color: #43afc2; /* Цвет ссылки при наведении на нее курсора мыши */  
+    text-decoration: underline; /* Добавляем подчеркивание */
+   }
+</style>

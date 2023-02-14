@@ -141,6 +141,17 @@ fastify.route({
 })
 
 fastify.route({
+  method: 'GET',
+  url: '/tovar/:id',
+  handler: (req, res) => {
+    pool.query("SELECT * FROM product WHERE id=?", [req.params.id], (err, result) => {
+      if (err) { res.send(err) }
+      else { res.send(result[0]) }
+    })
+  },
+})
+
+fastify.route({
   method: 'POST',
   url: '/product/create', preHandler: AdminGuard,
   handler: (req, res) => {
