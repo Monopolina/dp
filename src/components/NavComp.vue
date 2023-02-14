@@ -15,6 +15,7 @@
         </ul>
 
         <div class="text-end">
+          <button type="button" class="btn btn-outline me-2"><a class="nav-link text-black" href="/CartView">Корзина</a></button>
           <button v-if="!store.getters.isAuthorized" type="button" class="btn btn-outline me-2"><a class="nav-link text-black" href="/login">Войти</a></button>
           <button v-if ="!store.getters.isAuthorized" type="button" class="btn btn-outline me-2"><a class="nav-link text-black" href="/register">Регистрация</a></button>
           <button v-if="store.getters.isAuthorized" @click="exit()" type="button" class="btn btn-outline me-2">Выйти</button>
