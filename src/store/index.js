@@ -4,7 +4,8 @@ import { createStore } from 'vuex'
 export default createStore({
   state: { 
     token:"",
-    role: "user"
+    role: "user",
+    cart: []
   },
   getters: { 
     token(state){
@@ -16,6 +17,9 @@ export default createStore({
     },
     isAdmin (state){
       return state.role
+    },
+    CART(state) {
+      return state.cart;
     }
   },
   mutations: {
@@ -24,6 +28,26 @@ export default createStore({
     },
     rolemutation(state, role){
       state.role = role
+    },
+    SET_CART: (state, product) => {
+      if(state.cart.length){
+        let isProduct = false;
+        state.cart.map(function (item) {
+          if (item.id === product.id){
+            isProduct = true;
+            item.quantity++
+          }
+          if (!isProduct) {
+            state.cart.push(product)
+          }
+        })
+      }
+      else{
+        state.cart.push(product)
+      }
+    },
+    REMOVE_FROM_CART: (state, index) => {
+      state.cart.splice(index,1)
     }
   },
   actions: {
@@ -57,6 +81,12 @@ export default createStore({
         VueCookieNext.setCookie("role", "user")
         context.commit("rolemutation", "user")
       }
+    },
+    async ADD_TO_CART({commit}, product) {
+      commit('SET_CART', product);
+    },
+    DELETE_FROM_CART({commit}, index) {
+      commit('REMOVE_FROM_CART', 'index')
     }
   },
   modules: {

@@ -4,15 +4,16 @@
     <h1>Catalog</h1>
     <v-catalog-item 
     v-for="product in products"
-    @sendid="idconcole"
     :key="product.id"
     v-bind:product_data="product"
+    @addtocart="addtocart"
     />
   </div></div>
 </template>
 
 <script>
 import vCatalogItem from '@/components/v-catalog-item.vue';
+import { mapActions } from 'vuex';
 export default {
   components: {
     vCatalogItem
@@ -31,9 +32,12 @@ export default {
       });
       this.products = await result.json();
     },
-    async idconcole() {
-      console.log(products)
+    async addtocart(products) {
+      this.ADD_TO_CART(products)
     },
+    ...mapActions([
+      'ADD_TO_CART'
+    ]),
   },
 
   mounted() {

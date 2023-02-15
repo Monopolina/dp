@@ -4,7 +4,7 @@
       <div class="card mb-3 mx-auto border-info" style="max-width: 740px;">
         <div class="row g-0 catalog-product__image">
           <div class="catalog-product__image col-md-4" @click="getproductdetels(product_data.id)">
-            <!-- <img :src="require('@/assets/img/' + product.img)" class="img-fluid rounded-start"> -->
+            <img :src=" require('../assets/img/'+product_data.img) " alt="img" class="imgcat">
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -53,7 +53,7 @@ export default {
       this.$router.push({ name: 'ProductView', params: { id: id } });
     },
     async addcart(){
-      this.$emit('sendid', this.product.id)
+      this.$emit('addtocart', this.product_data);
     },
   },
 

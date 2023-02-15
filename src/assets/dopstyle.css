@@ -60,3 +60,15 @@ a {
     color: black;
     text-decoration: underline;
 }
+.v-cart-item{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.imgcat{
+    width: 90%;
+}
+.imgcart{
+    max-width: 15%;
+}

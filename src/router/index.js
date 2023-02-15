@@ -73,6 +73,11 @@ const routes = [
     component: () => import('../views/magazin/CartView.vue'),
   },
   {
+    path: '/v-poverka',
+    name: 'v-poverka',
+    component: () => import('../views/magazin/v-poverka.vue'),
+  },
+  {
     path: '/AdminView',
     name: 'AdminView',
     component: () => import('../views/admin/AdminView.vue'),

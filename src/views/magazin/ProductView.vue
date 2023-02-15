@@ -5,7 +5,9 @@
 <div class="row">
 <div class="col-lg-6 mb-5 ftco-animate fadeInUp ftco-animated">
 <a href="" class="image-popup">
-  <img :src="userWithIcon.img" class="img-fluid">
+  <img src="'../../assets/img/'+product.img" alt="">
+  <!-- <img :src=" require('../../assets/img/'+product.img) "> -->
+  <!-- <img :src="userWithIcon.img" class="img-fluid"> -->
 </a>
 </div>
 <div class="col-lg-6 product-details pl-md-5 ftco-animate fadeInUp ftco-animated">
